@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, View, FlatList, SafeAreaView } from 'react-native';
 import ListItem from './components/ListItem';
+import articles from './dummies/articles.json';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   itemContainer: {
     height: 100,
@@ -36,12 +35,18 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <ListItem
-        author="SampleNews"
-        imageUrl="https://picsum.photos/id/10/200/200"
-        title="「2番・指名打者」で出場した大谷は、見逃し三振、三ゴロ、中飛で迎えた第4打席で、アストロズ3番手のガルシアから2球目を中堅へ運んだ。2―2の同点での場面で放った勝ち越し本塁打は、両リーグトップに並ぶ一撃で、大谷は一塁ベースを回ると左腕を突き上げ、喜びを表現した。9回の5打席目は空振り三振に終わった。5打数1安打1打点で打率2割8分6厘。"
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={articles}
+        renderItem={({ item }) => (
+          <ListItem
+            imageUrl={item.urlToImage}
+            title={item.title}
+            author={item.author}
+          />
+        )}
+        keyExtractor={(item, index) => index.toString()}
       />
-    </View>
+    </SafeAreaView>
   );
 }
